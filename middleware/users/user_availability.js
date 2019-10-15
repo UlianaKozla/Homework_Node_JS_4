@@ -1,12 +1,13 @@
-const {provider} = require('../../database');
+const database = require('../../database').getInstance();
 
 module.exports = async (req, res, next) => {
     try {
         const { idUser } = req.params;
-        const query = `SELECT * FROM users WHERE id = ${idUser}`;
-        const [user_availability] = await provider.promise().query(query);
+        const usermodel = database.getModel('users');
 
-        if (!user_availability.length) {
+        let user_availability = await usermodel.findByPk(idUser);
+
+        if (!user_availability) {
             throw new Error(`User is not found`);
         }
 

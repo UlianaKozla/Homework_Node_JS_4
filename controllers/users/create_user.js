@@ -1,13 +1,15 @@
-const {provider} = require('../../database');
+const database = require('../../database').getInstance();
 
 module.exports = async (req, res) => {
     try {
-        const {name, email, password, city} = req.body;
-        const query =  `INSERT INTO users (name, email, password, city) VALUES (?, ?, ?, ?)`;
-        await provider.promise().query(query, [name, email, password, city]);
-        res.render('login');
+        const newUser = req.body;
+        const Users = database.getModel('users');
+
+        await Users.create(newUser);
+
+        res.render('auth');
     }
     catch (e) {
-        res.status(400).json(e.message);
+        res.json(e.message);
     }
 }

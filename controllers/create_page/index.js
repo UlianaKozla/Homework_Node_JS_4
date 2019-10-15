@@ -1,11 +1,11 @@
 const homepage = require('./homepage');
 const register = require('./register');
 const flats = require('./flats');
-const login = require('./login');
+const auth = require('./auth');
 
 module.exports = {
     homepage,
     register,
     flats,
-    login
+    auth
 }

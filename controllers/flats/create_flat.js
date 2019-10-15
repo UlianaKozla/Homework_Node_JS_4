@@ -1,13 +1,15 @@
-const {provider} = require('../../database');
+const database = require('../../database').getInstance();
 
 module.exports = async (req, res) => {
     try {
-        const {squereMetres, price, city} = req.body;
-        const query =  `INSERT INTO users (squereMetres, price, city) VALUES (?, ?, ?, ?)`;
-        await provider.promise().query(query, [squereMetres, price, city]);
+        const newFlat = req.body;
+        const Flats = database.getModel('flats');
+
+        await Flats.create(newFlat);
+
         res.render('flats');
     }
     catch (e) {
-        res.status(400).json(e.message);
+        res.json(e.message);
     }
 }
