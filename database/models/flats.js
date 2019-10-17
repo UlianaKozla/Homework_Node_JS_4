@@ -29,5 +29,8 @@ module.exports = (sequelize, DataTypes) => {
         timestamps: false
     });
 
+    const User = sequelize.import('./users');
+    Flat.belongsTo(User, {foreignKey: 'idUsers'});
+
     return Flat
 }

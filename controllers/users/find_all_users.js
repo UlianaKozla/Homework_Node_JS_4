@@ -1,13 +1,8 @@
-const database = require('../../dataBase').getInstance();
+const { userService } = require('../../service');
 
 module.exports = async (req,res)=>{
     try {
-        const Users = database.getModel('users');
-        let allUsers = await Users.findAll();
-
-        if (! allUsers) {
-            throw new Error('No users in database')
-        }
+        let allUsers = await userService.findAll();
 
         res.json(allUsers);
     } catch (e) {

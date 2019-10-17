@@ -1,16 +1,16 @@
-const dataBase = require('../../dataBase').getInstance();
+const { userService } = require('../../service');
 
 module.exports = async (req, res) => {
     try {
         const userToUpdate = req.body;
         const { idUsers } = req.params;
-        const Users = dataBase.getModel('users');
+        const { id } = req.user;
 
-        await Users.update(userToUpdate, {
-            where: {
-                idUsers
-            }
-        });
+        if (+idUsers !== id) {
+            throw new Error('You do not have access to this user')
+        }
+
+        await userService.updateUser({id: idUsers}, userToUpdate)
 
         res.redirect(`/users/${idUsers}`)
     } catch (e) {

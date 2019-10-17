@@ -1,13 +1,8 @@
-const database = require('../../dataBase').getInstance();
+const { flatService } = require('../../service');
 
 module.exports = async (req,res)=>{
     try {
-        const Flats = database.getModel('flats');
-        let allFlats = await Flats.findAll();
-
-        if (! allFlats) {
-            throw new Error('No flats in database')
-        }
+        let allFlats = await flatService.findAll();
 
         res.json(allFlats);
     } catch (e) {

@@ -1,18 +1,18 @@
-const dataBase = require('../../dataBase').getInstance();
+const { flatService } = require('../../service');
 
 module.exports = async (req, res) => {
     try {
         const flatToUpdate = req.body;
-        const { idFlats } = req.params;
-        const Flats = dataBase.getModel('flats');
+        const { idFlat } = req.params;
+        const { id } = req.user;
 
-        await Flats.update(flatToUpdate, {
-            where: {
-                id: idFlats
-            }
-        });
+        if (+idFlat !== id) {
+            throw new Error('You do not have access to this flat')
+        }
 
-        res.redirect(`/flats/${idFlats}`)
+        await flatService.({id: idUsers}, userToUpdate)
+
+        res.redirect(`/users/${idUsers}`)
     } catch (e) {
         res.json(e.message);
     }

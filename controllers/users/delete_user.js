@@ -1,18 +1,12 @@
-const dataBase = require('../../dataBase').getInstance();
+const { userService } = require('../../service');
 
 module.exports = async (req, res) => {
     try {
-        const userToDelete = req.body;
-        const { idUsers } = req.params;
-        const Users = dataBase.getModel('users');
+        const newUser = req.body;
 
-        await Users.delete(userToDelete, {
-            where: {
-                idUsers
-            }
-        });
+        await userService.create(newUser);
 
-        res.json(`User with id ${idUsers} was deleted`);
+        res.json(`User was deleted`);
     } catch (e) {
         res.json(e.message);
     }
