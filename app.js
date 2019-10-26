@@ -64,7 +64,7 @@ app.get('/', create_page.homepage);
 app.use('/users', users_router);
 app.use('/flats', flats_router);
 app.use('/auth', auth_router);
-app.use('/support', (req, res) => {
+app.get('/support', (req, res) => {
     res.render('massage')
 });
 
